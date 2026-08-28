@@ -25,20 +25,21 @@ class AnimatedRadar {
     
     spawnDot() {
         if (this.dots.length < this.maxDots && Math.random() < this.spawnChance) {
-            // Spawn dot at the edge (on the outer ring)
+            // Spawn dot at the outer edge (maxRadius distance from center)
             const angle = Math.random() * Math.PI * 2;
             const x = this.centerX + Math.cos(angle) * this.maxRadius;
             const y = this.centerY + Math.sin(angle) * this.maxRadius;
             
-            // Random direction for movement (inward toward center)
-            const direction = angle + Math.PI; // Point toward center
+            // Direction toward center
+            const direction = angle + Math.PI;
             
             this.dots.push({
                 x: x,
                 y: y,
                 direction: direction,
                 speed: 0.5,
-                detected: false
+                detected: false,
+                spawnAngle: angle
             });
         }
     }
@@ -51,24 +52,30 @@ class AnimatedRadar {
         for (let i = this.dots.length - 1; i >= 0; i--) {
             const dot = this.dots[i];
             
-            // Check if sweep is over this dot
-            const dotAngle = Math.atan2(dot.y - this.centerY, dot.x - this.centerX);
+            // Calculate dot's distance from center
             const dotDistance = Math.sqrt(
                 Math.pow(dot.x - this.centerX, 2) + Math.pow(dot.y - this.centerY, 2)
             );
             
-            // Check if dot is within sweep
-            const angleDiff = Math.abs(dotAngle - sweepAngle);
-            const normalizedDiff = Math.min(angleDiff, Math.PI * 2 - angleDiff);
+            // Calculate dot's angle from center
+            const dotAngle = Math.atan2(dot.y - this.centerY, dot.x - this.centerX);
+            
+            // Check if dot is within sweep arc
+            let angleDiff = dotAngle - sweepAngle;
+            // Normalize angle difference to [-PI, PI]
+            while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+            while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+            
+            const normalizedDiff = Math.abs(angleDiff);
             
             if (normalizedDiff < sweepRadians / 2 && dotDistance < this.maxRadius) {
                 dot.detected = true;
-                // Move dot in its direction
+                // Move dot toward center
                 dot.x += Math.cos(dot.direction) * dot.speed;
                 dot.y += Math.sin(dot.direction) * dot.speed;
             }
             
-            // Remove dot if it goes out of bounds (at the edge)
+            // Remove dot if it goes beyond the outer edge
             const distFromCenter = Math.sqrt(
                 Math.pow(dot.x - this.centerX, 2) + Math.pow(dot.y - this.centerY, 2)
             );
