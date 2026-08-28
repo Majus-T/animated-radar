@@ -25,14 +25,13 @@ class AnimatedRadar {
     
     spawnDot() {
         if (this.dots.length < this.maxDots && Math.random() < this.spawnChance) {
-            // Random angle and radius for spawn
+            // Spawn dot at the edge (on the outer ring)
             const angle = Math.random() * Math.PI * 2;
-            const radius = Math.random() * this.maxRadius * 0.8;
-            const x = this.centerX + Math.cos(angle) * radius;
-            const y = this.centerY + Math.sin(angle) * radius;
+            const x = this.centerX + Math.cos(angle) * this.maxRadius;
+            const y = this.centerY + Math.sin(angle) * this.maxRadius;
             
-            // Random direction for movement
-            const direction = Math.random() * Math.PI * 2;
+            // Random direction for movement (inward toward center)
+            const direction = angle + Math.PI; // Point toward center
             
             this.dots.push({
                 x: x,
