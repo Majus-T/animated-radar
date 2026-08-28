@@ -3,37 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Radar Chart</title>
+    <title>Animated Radar</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Animated Radar Chart</h1>
-        <div class="radar-container">
-            <svg id="radarSVG" width="500" height="500" viewBox="0 0 500 500">
-                <!-- Grid circles will be drawn here -->
-                <g id="gridGroup"></g>
-                <!-- Axes will be drawn here -->
-                <g id="axesGroup"></g>
-                <!-- Data polygon will be drawn here -->
-                <g id="dataGroup">
-                    <polygon id="dataPolygon" class="data-polygon"></polygon>
-                    <g id="dotsGroup"></g>
-                </g>
-            </svg>
-        </div>
-        <div class="controls">
-            <button id="animateBtn" class="btn">Animate</button>
-            <button id="resetBtn" class="btn">Reset</button>
-        </div>
-        <div class="legend">
-            <div class="legend-item">
-                <span class="legend-color" style="background-color: #6366f1;"></span>
-                <span>Data Values</span>
-            </div>
-        </div>
+    <div class="radar-container">
+        <canvas id="radarCanvas"></canvas>
     </div>
-
-    <script src="script.js"></script>
+    <script src="radar.js"></script>
 </body>
 </html>
