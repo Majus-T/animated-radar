@@ -49,7 +49,9 @@ class AnimatedRadar {
         const sweepWidth = 60; // degrees
         const sweepRadians = (sweepWidth * Math.PI) / 180;
         
-        this.dots.forEach((dot, index) => {
+        for (let i = this.dots.length - 1; i >= 0; i--) {
+            const dot = this.dots[i];
+            
             // Check if sweep is over this dot
             const dotAngle = Math.atan2(dot.y - this.centerY, dot.x - this.centerX);
             const dotDistance = Math.sqrt(
@@ -67,14 +69,14 @@ class AnimatedRadar {
                 dot.y += Math.sin(dot.direction) * dot.speed;
             }
             
-            // Remove dot if it goes out of bounds
+            // Remove dot if it goes out of bounds (at the edge)
             const distFromCenter = Math.sqrt(
                 Math.pow(dot.x - this.centerX, 2) + Math.pow(dot.y - this.centerY, 2)
             );
-            if (distFromCenter > this.maxRadius + 50) {
-                this.dots.splice(index, 1);
+            if (distFromCenter > this.maxRadius) {
+                this.dots.splice(i, 1);
             }
-        });
+        }
     }
     
     drawDots() {
