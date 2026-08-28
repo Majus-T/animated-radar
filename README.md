@@ -1,2 +1,1 @@
-# animated-radar
-An animated radar chart visualization for a website
+# Animated Radar\n\nA smooth, animated radar visualization with rotating sweep and concentric rings.\n\n## View Online\nhttps://majus-t.github.io/animated-radar/\n\n## Features\n- 🟢 Green radar sweep animation\n- ⭕ Concentric circles\n- ➕ Crosshair display\n- 📊 Grid background\n- ⚡ 60fps smooth animation\n
